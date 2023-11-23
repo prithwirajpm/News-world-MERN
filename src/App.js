@@ -1,23 +1,21 @@
-import logo from './logo.svg';
 import './App.css';
+import NewsBody from './Component/NewsBody';
+import NewsFooter from './Component/NewsFooter';
+import NewsNavBar from './Component/NewsNavBar';
+import '../src/bootstrap.min.css';
+import { Route, Routes } from 'react-router-dom';
+import NewsLogin from './Pages/NewsLogin';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <NewsNavBar />
+      <Routes>
+        <Route path='/' element={<NewsBody />}></Route>
+        <Route path='/login' element={<NewsLogin />}></Route>
+        Prithwiraj
+      </Routes>
+      <NewsFooter />
     </div>
   );
 }
