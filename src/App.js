@@ -5,6 +5,8 @@ import NewsNavBar from './Component/NewsNavBar';
 import '../src/bootstrap.min.css';
 import { Route, Routes } from 'react-router-dom';
 import NewsLogin from './Pages/NewsLogin';
+import NewsAuth from './Component/NewsAuth';
+import NewsDashBoard from './Pages/NewsDashBoard';
 
 function App() {
   return (
@@ -13,6 +15,9 @@ function App() {
       <Routes>
         <Route path='/' element={<NewsBody />}></Route>
         <Route path='/login' element={<NewsLogin />}></Route>
+        <Route path='/auth' element={<NewsAuth/>}></Route>
+        <Route path='/register' element={<NewsAuth Register/>}></Route>
+        <Route path='/dashbord' element={<NewsDashBoard />}></Route>
         Prithwiraj
       </Routes>
       <NewsFooter />
