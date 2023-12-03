@@ -7,6 +7,8 @@ import { Route, Routes } from 'react-router-dom';
 import NewsLogin from './Pages/NewsLogin';
 import NewsAuth from './Component/NewsAuth';
 import NewsDashBoard from './Pages/NewsDashBoard';
+import ListCommand from './Component/ListCommand';
+import AddNewsList from './Component/AddNewsList';
 
 function App() {
   return (
@@ -18,6 +20,8 @@ function App() {
         <Route path='/auth' element={<NewsAuth/>}></Route>
         <Route path='/register' element={<NewsAuth Register/>}></Route>
         <Route path='/dashbord' element={<NewsDashBoard />}></Route>
+        <Route path='/addnewslist' element={<AddNewsList />}></Route>
+        <Route path='/listcomment' element={<ListCommand />}></Route>
         Prithwiraj
       </Routes>
       <NewsFooter />
