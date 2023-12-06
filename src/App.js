@@ -16,7 +16,7 @@ function App() {
       <NewsNavBar />
       <Routes>
         <Route path='/' element={<NewsBody />}></Route>
-        <Route path='/login' element={<NewsLogin />}></Route>
+        {/* <Route path='/login' element={<NewsLogin />}></Route> */}
         <Route path='/auth' element={<NewsAuth/>}></Route>
         <Route path='/register' element={<NewsAuth Register/>}></Route>
         <Route path='/dashbord' element={<NewsDashBoard />}></Route>

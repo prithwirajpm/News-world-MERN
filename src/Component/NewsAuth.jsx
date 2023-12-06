@@ -1,9 +1,41 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Col, Form } from 'react-bootstrap';
 import VisibilityIcon from '@mui/icons-material/Visibility';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { registerAPI } from '../services/allAPI';
 
 function NewsAuth({ Register }) {
+    const [userData,setUserData]=useState({
+        username:"",email:"",password:""
+    })
+
+    // navigate
+    const navigate = useNavigate()
+
+    const handleRegister = async(e)=>{
+        e.preventDefault()
+        const {username,email,password} = userData
+        if(!username || !email || !password){
+            toast.info("Please fill the form completely")
+
+        }else{
+            const result = await registerAPI(userData)
+            if(result.status===200){
+                console.log(result)
+                alert(`${result.data.username} has registered successfully !!!`)
+                setUserData({
+                    username:"",email:"",password:""
+                })
+                navigate('/auth')
+            }else{
+                toast.warning(result.response.data)
+                console.log(result)
+            }
+        }
+    }
+
     return (
         <div className='row w-100 d-flex justify-content-center align-items-center vh-100'>
             <div className='w-75 shadow-lg' style={{ backgroundColor: '#F0F8FF' }}>
@@ -18,41 +50,43 @@ function NewsAuth({ Register }) {
                     </Col>
                     <Col lg={6} sm={12}>
                         <Form>
-                            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                                <Form.Label>Email address</Form.Label>
-                                <Form.Control type="email" placeholder="name@example.com" />
-                            </Form.Group>
-                            {Register ?
-                                <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                        {Register ?
+                                <Form.Group className="mb-3">
                                     <Form.Label>UserName</Form.Label>
-                                    <Form.Control type="text" placeholder="Username" />
+                                    <Form.Control type="text" controlId="ForBasicName" placeholder="Username" value={userData.username}
+                                        onChange={e=>setUserData({...userData,username:e.target.value})}/>
                                 </Form.Group> : null
 
                             }
-
-                            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                                <div className='d-flex justify-content-between'><Form.Label>Password</Form.Label><span><button className='icon-link' style={{ border: 'none', backgroundColor: 'white' }}><VisibilityIcon style={{ color: '#6CB4EE' }} /></button></span></div>
-                                <Form.Control type="password" placeholder="password" />
+                            <Form.Group className="mb-3">
+                                <Form.Label>Email address</Form.Label>
+                                <Form.Control type="email" controlId="ForBasicEmail" placeholder="name@example.com" value={userData.email}
+                                        onChange={e=>setUserData({...userData,email:e.target.value})}/>
                             </Form.Group>
-                            {Register ?
-                                <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                                    <div className='d-flex justify-content-between'><Form.Label>Conform Password</Form.Label><span><button className='icon-link' style={{ border: 'none', backgroundColor: 'white' }}><VisibilityIcon style={{ color: '#6CB4EE' }} /></button></span></div>
-                                    <Form.Control type="password" placeholder="Conform-Password" />
-                                </Form.Group>:null
-                            }
+                            
+
+                            <Form.Group className="mb-3">
+                                <div className='d-flex justify-content-between'><Form.Label>Password</Form.Label><span><button className='icon-link' style={{ border: 'none', backgroundColor: 'white' }}><VisibilityIcon style={{ color: '#6CB4EE' }} /></button></span></div>
+                                <Form.Control type="password" placeholder="password"  controlId="ForBasicPassword" value={userData.password}
+                                        onChange={e=>setUserData({...userData,password:e.target.value})} />
+                            </Form.Group>
                             <div className='d-flex justify-content-center mt-5'>
                                 <div>
-                                {Register?null:
-                                    <button className='btn btn-primary m-3'>Login</button>}
+                                {Register?<button className='btn btn-primary m-3' onClick={(e)=>handleRegister(e)}>Register</button>:
+                                    <div>
+                                        <button className='btn btn-primary m-3'>Login</button>
+                                        <p>New User? Click here to <Link to={'/register'}>Register</Link></p>
+                                    </div>
+                                    }
+                                   
                                     
-                                    <Link to={'/register'}><button className='btn btn-primary m-3'>Register</button></Link>
                                 </div>
                             </div>
                         </Form>
                     </Col>
                 </div>
             </div>
-
+            <ToastContainer position='top-right' theme='colored' />
         </div>
     )
 }

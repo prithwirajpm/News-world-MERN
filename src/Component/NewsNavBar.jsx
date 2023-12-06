@@ -14,8 +14,7 @@ function NewsNavBar() {
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="ms-auto">
-            <Nav.Link><Link to={'/login'} style={{ textDecoration: 'none', color: 'Black' }}>Login</Link></Nav.Link>
-            <Nav.Link><Link to={'/auth'} style={{ textDecoration: 'none', color: 'Black' }}>Register</Link></Nav.Link>
+            <Nav.Link><Link to={'/auth'} style={{ textDecoration: 'none', color: 'Black' }}>Login</Link></Nav.Link>
               <Nav.Link href="#link" className='text-dark'>Logout</Nav.Link>
               <NavDropdown title="Dropdown" id="basic-nav-dropdown">
                 <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
