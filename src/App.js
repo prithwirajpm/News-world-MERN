@@ -4,7 +4,6 @@ import NewsFooter from './Component/NewsFooter';
 import NewsNavBar from './Component/NewsNavBar';
 import '../src/bootstrap.min.css';
 import { Route, Routes } from 'react-router-dom';
-import NewsLogin from './Pages/NewsLogin';
 import NewsAuth from './Component/NewsAuth';
 import NewsDashBoard from './Pages/NewsDashBoard';
 import ListCommand from './Component/ListCommand';

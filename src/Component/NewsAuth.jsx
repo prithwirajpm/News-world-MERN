@@ -4,7 +4,7 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import { Link, useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { registerAPI } from '../services/allAPI';
+import { loginAPI, registerAPI } from '../services/allAPI';
 
 function NewsAuth({ Register }) {
     const [userData,setUserData]=useState({
@@ -14,6 +14,32 @@ function NewsAuth({ Register }) {
     // navigate
     const navigate = useNavigate()
 
+//Login
+const handleLogin = async(e)=>{
+    e.preventDefault()
+    const {email,password} = userData
+        if(!email || !password){
+            toast.info("Please fill the form completely")
+
+        }else{
+            const result = await loginAPI(userData)
+            if(result.status===200){
+                console.log(result)
+                // alert(`${result.data.username} has registered successfully !!!`)
+                sessionStorage.setItem("existingUser",JSON.stringify(result.data.existingUser))
+                sessionStorage.setItem("token",result.data.token)
+                setUserData({
+                email:"",password:""
+                })
+                navigate('/addnewslist')
+            }else{
+                toast.warning(result.response.data)
+                console.log(result)
+            }
+        }
+
+} 
+// Register
     const handleRegister = async(e)=>{
         e.preventDefault()
         const {username,email,password} = userData
@@ -74,7 +100,7 @@ function NewsAuth({ Register }) {
                                 <div>
                                 {Register?<button className='btn btn-primary m-3' onClick={(e)=>handleRegister(e)}>Register</button>:
                                     <div>
-                                        <button className='btn btn-primary m-3'>Login</button>
+                                        <button onClick={(e)=>handleLogin(e)} className='btn btn-primary m-3'>Login</button>
                                         <p>New User? Click here to <Link to={'/register'}>Register</Link></p>
                                     </div>
                                     }

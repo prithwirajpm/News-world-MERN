@@ -1,9 +1,16 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import './NewsDasBoard.css'
 import EditIcon from '@mui/icons-material/Edit';
 import { Link } from 'react-router-dom';
+import PhotoCameraFrontIcon from '@mui/icons-material/PhotoCameraFront';
 
 function NewsDashBoard() {
+  const [username,setUsername] = useState("")
+  useEffect(()=>{
+    if(sessionStorage.getItem("existingUser")){
+      setUsername(JSON.parse(sessionStorage.getItem("existingUser")).username)
+    }
+  },[])
   return (
     <div>
       <div className='profileImg d-flex justify-content-start align-items-end'>
@@ -25,6 +32,9 @@ function NewsDashBoard() {
       <div className='w-100 d-flex justify-content-end align-items-start' >
         <div className='border w-100'>
           <ul className="nav nav-tabs ">
+          <li className="nav-item">
+              <h5 className='ms-2'>Welcome : {username} <PhotoCameraFrontIcon/></h5>
+            </li>
             <li className="nav-item ms-auto">
             <Link to={'/addnewslist'} className='nav-link' aria-current="page" style={{ textDecoration: 'none', color: 'Black' }}>News</Link>
             </li>

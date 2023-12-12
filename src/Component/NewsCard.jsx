@@ -23,7 +23,7 @@
 
 
 
-import * as React from 'react';
+import React,{ useEffect, useState } from 'react';
 import { styled } from '@mui/material/styles';
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
@@ -61,6 +61,17 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
 }));
 
 export default function NewsCard() {
+  const [loggedin,setLoggedin] = useState(false)
+//  sessionset
+  useEffect(()=>{
+    if(sessionStorage.getItem("token")){
+      setLoggedin(true)
+    }else{
+      setLoggedin(false)
+    }
+  },[])
+
+
   const [expanded, setExpanded] = React.useState(false);
 
   const handleExpandClick = () => {
@@ -97,6 +108,7 @@ export default function NewsCard() {
           if you like.
         </Typography>
       </CardContent>
+      {loggedin?
       <CardActions disableSpacing>
         <IconButton aria-label="add to favorites">
           <span style={{ fontSize: '10px' }}>2</span>
@@ -120,7 +132,11 @@ export default function NewsCard() {
         </ExpandMore>
         <AddNewsComment />
 
+      </CardActions>:
+      <CardActions>
+        Nothing
       </CardActions>
+}
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
           <Typography paragraph>Method:</Typography>
