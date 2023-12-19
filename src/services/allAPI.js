@@ -15,3 +15,14 @@ export const loginAPI = async(user)=>{
 export const addNewsAPI = async(reqBody,reqHeader)=>{
     return await commonAPI("POST",`${BASE_URL}/news/add`,reqBody,reqHeader)
 }
+
+// allUser News
+export const allNewsAPI = async()=>{
+    return await commonAPI("GET",`${BASE_URL}/user/all`,"","")
+}
+
+// user News
+
+export const usersNewsAPI = async(reqHeader)=>{
+    return await commonAPI("GET",`${BASE_URL}/user/all-news`,"",reqHeader)
+}

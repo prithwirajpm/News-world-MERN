@@ -1,78 +1,30 @@
-// import Button from 'react-bootstrap/Button';
-// import Card from 'react-bootstrap/Card';
+// NewsCard.js
 
-// function NewsCard() {
-//   return (
+import React, { useEffect, useState } from "react";
+import Card from "@mui/material/Card";
+import CardHeader from "@mui/material/CardHeader";
+import CardMedia from "@mui/material/CardMedia";
+import CardContent from "@mui/material/CardContent";
+import CardActions from "@mui/material/CardActions";
+import IconButton from "@mui/material/IconButton";
+import Typography from "@mui/material/Typography";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import HeartBrokenIcon from "@mui/icons-material/HeartBroken";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
+import Collapse from "@mui/material/Collapse";
+import DeleteSweepOutlinedIcon from "@mui/icons-material/DeleteSweepOutlined";
+import AddNewsComment from "./AddNewsComment";
+import { Form } from "react-bootstrap";
+import { BASE_URL } from "../services/baseurl";
 
-//         <Card style={{ width: '18rem' }}>
-//           <Card.Img variant="top"  />
-//           <Card.Body>
-//             <Card.Title>Card Title</Card.Title>
-//             <span>User Name</span>
-//             <Card.Text>
-//               Some quick example text to build on the card title and make up the
-//               bulk of the card's content.
-//             </Card.Text>
-//             <Button variant="primary">ssss</Button>
-//           </Card.Body>
-//         </Card>
-//   );
-// }
-
-// export default NewsCard;
-
-
-
-import React,{ useEffect, useState } from 'react';
-import { styled } from '@mui/material/styles';
-import Card from '@mui/material/Card';
-import CardHeader from '@mui/material/CardHeader';
-import CardMedia from '@mui/material/CardMedia';
-import CardContent from '@mui/material/CardContent';
-import CardActions from '@mui/material/CardActions';
-import Collapse from '@mui/material/Collapse';
-import Avatar from '@mui/material/Avatar';
-import IconButton, { IconButtonProps } from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import { red } from '@mui/material/colors';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import ShareIcon from '@mui/icons-material/Share';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
-import HeartBrokenIcon from '@mui/icons-material/HeartBroken';
-import AddNewsComment from './AddNewsComment';
-import { Form } from 'react-bootstrap';
-import DeleteSweepOutlinedIcon from '@mui/icons-material/DeleteSweepOutlined';
-
-
-interface ExpandMoreProps extends IconButtonProps {
-  expand: boolean;
-}
-
-const ExpandMore = styled((props: ExpandMoreProps) => {
-  const { expand, ...other } = props;
-  return <IconButton {...other} />;
-})(({ theme, expand }) => ({
-  transform: !expand ? 'rotate(0deg)' : 'rotate(180deg)',
-  marginLeft: 'auto',
-  transition: theme.transitions.create('transform', {
-    duration: theme.transitions.duration.shortest,
-  }),
-}));
-
-export default function NewsCard() {
-  const [loggedin,setLoggedin] = useState(false)
-//  sessionset
-  useEffect(()=>{
-    if(sessionStorage.getItem("token")){
-      setLoggedin(true)
-    }else{
-      setLoggedin(false)
-    }
-  },[])
-
-
+export default function NewsCard({ data }) {
+  const [loggedin, setLoggedin] = useState(false);
   const [expanded, setExpanded] = React.useState(false);
+
+  useEffect(() => {
+    setLoggedin(!!sessionStorage.getItem("token"));
+  }, []);
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
@@ -81,69 +33,66 @@ export default function NewsCard() {
   return (
     <Card sx={{ maxWidth: 345 }}>
       <CardHeader
-        avatar={
-          <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-            R
-          </Avatar>
-        }
-
         action={
           <IconButton aria-label="settings">
             <MoreVertIcon />
           </IconButton>
         }
-        title="Shrimp and Chorizo Paella"
-        subheader="September 14, 2016"
+        title={data.newsTitle.slice(0, 20)}
+        subheader={data.newsDate}
       />
       <CardMedia
         component="img"
         height="194"
-        image="https://images.unsplash.com/photo-1495020689067-958852a7765e?q=80&w=2069&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-        alt="Paella dish"
+        src={`${BASE_URL}/uploads/${data.newsImage}`}
+        alt={`Image for ${data.newsTitle}`}
       />
       <CardContent>
         <Typography variant="body2" color="text.secondary">
-          This impressive paella is a perfect party dish and a fun meal to cook
-          together with your guests. Add 1 cup of frozen peas along with the mussels,
-          if you like.
+          {data.newsDetails}
         </Typography>
       </CardContent>
-      {loggedin?
-      <CardActions disableSpacing>
-        <IconButton aria-label="add to favorites">
-          <span style={{ fontSize: '10px' }}>2</span>
-          <FavoriteIcon />
-        </IconButton>
-        <IconButton aria-label="add to unfavorite">
-          <span style={{ fontSize: '10px' }}>2</span>
-          <HeartBrokenIcon />
-        </IconButton>
-        <IconButton aria-label="comment">
-
-        </IconButton>
-
-        <ExpandMore
-          expand={expanded}
-          onClick={handleExpandClick}
-          aria-expanded={expanded}
-          aria-label="show more"
-        >
-          <ExpandMoreIcon />
-        </ExpandMore>
-        <AddNewsComment />
-
-      </CardActions>:
-      <CardActions>
-        Nothing
-      </CardActions>
-}
+      {loggedin ? (
+        <CardActions disableSpacing>
+          <IconButton aria-label="add to favorites">
+            <span style={{ fontSize: "10px" }}>2</span>
+            <FavoriteIcon />
+          </IconButton>
+          <IconButton aria-label="add to unfavorite">
+            <span style={{ fontSize: "10px" }}>2</span>
+            <HeartBrokenIcon />
+          </IconButton>
+          <IconButton aria-label="comment"></IconButton>
+          <IconButton
+            onClick={handleExpandClick}
+            aria-expanded={expanded}
+            aria-label="show more"
+          >
+            <ExpandMoreIcon />
+          </IconButton>
+          <AddNewsComment />
+        </CardActions>
+      ) : (
+        <CardActions>Nothing</CardActions>
+      )}
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
           <Typography paragraph>Method:</Typography>
           <Typography paragraph>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-             <div className='d-flex justify-content-between'> <Form.Label style={{fontSize:'10px'}}>Heading</Form.Label><Form.Label style={{fontSize:'10px',color:'grey'}}><DeleteSweepOutlinedIcon /></Form.Label></div>
-              <Form.Control className='border rounded p-2' type="text" placeholder="commant" readOnly/>
+              <div className="d-flex justify-content-between">
+                {" "}
+                <Form.Label style={{ fontSize: "10px" }}>Heading</Form.Label>
+                <Form.Label style={{ fontSize: "10px", color: "grey" }}>
+                  <DeleteSweepOutlinedIcon />
+                </Form.Label>
+              </div>
+              <Form.Control
+                className="border rounded p-2"
+                type="text"
+                placeholder="comment"
+                readOnly
+              />
             </Form.Group>
           </Typography>
         </CardContent>
