@@ -26,3 +26,13 @@ export const allNewsAPI = async()=>{
 export const usersNewsAPI = async(reqHeader)=>{
     return await commonAPI("GET",`${BASE_URL}/user/all-news`,"",reqHeader)
 }
+
+// edit News
+export const editNewsAPI = async(newsId,reqBody,reqHeader)=>{
+return await commonAPI("PUT",`${BASE_URL}/news/edit/${newsId}`,reqBody,reqHeader)
+}
+
+// delete Api
+export const deleteNewsAPI = async(newsId,reqHeader)=>{
+    return await commonAPI("DELETE",`${BASE_URL}/news/remove/${newsId}`,{},reqHeader)
+    }

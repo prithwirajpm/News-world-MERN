@@ -17,6 +17,8 @@ import DeleteSweepOutlinedIcon from "@mui/icons-material/DeleteSweepOutlined";
 import AddNewsComment from "./AddNewsComment";
 import { Form } from "react-bootstrap";
 import { BASE_URL } from "../services/baseurl";
+import EditNews from "../Component/EditNews";
+import { deleteNewsAPI } from "../services/allAPI";
 
 export default function NewsCard({ data }) {
   const [loggedin, setLoggedin] = useState(false);
@@ -26,6 +28,21 @@ export default function NewsCard({ data }) {
     setLoggedin(!!sessionStorage.getItem("token"));
   }, []);
 
+  const handleDlete = async (id) => {
+    const token = sessionStorage.getItem("token");
+    const reqHeader = {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    };
+
+    const result = await deleteNewsAPI(id, reqHeader);
+    if (result.status === 200) {
+      
+    } else {
+      alert(result.response.data);
+    }
+  };
+
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
@@ -34,9 +51,14 @@ export default function NewsCard({ data }) {
     <Card sx={{ maxWidth: 345 }}>
       <CardHeader
         action={
-          <IconButton aria-label="settings">
-            <MoreVertIcon />
-          </IconButton>
+          <div>
+            <IconButton aria-label="settings">
+              {loggedin ? <EditNews editProject={data} /> : null}
+            </IconButton>
+            <IconButton aria-label="settings">
+              <DeleteSweepOutlinedIcon onClick={() => handleDlete(data._id)} />
+            </IconButton>
+          </div>
         }
         title={data.newsTitle.slice(0, 20)}
         subheader={data.newsDate}

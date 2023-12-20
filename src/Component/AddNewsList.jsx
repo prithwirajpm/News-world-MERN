@@ -4,11 +4,17 @@ import NewsCard from "./NewsCard";
 import { Col } from "react-bootstrap";
 import AddNews from "./AddNews";
 import { usersNewsAPI } from "../services/allAPI";
-import { addNewsResponseContext } from "../Context/ContextShare";
+import {
+  addNewsResponseContext,
+  editNewsResponseContext,
+} from "../Context/ContextShare";
 
 function AddNewsList() {
   const { addNewsResponse, setaddNewsResponse } = useContext(
     addNewsResponseContext
+  );
+  const { editNewsResponse, setEditNewsResponse } = useContext(
+    editNewsResponseContext
   );
   const [userNews, setUserNews] = useState([]);
 
@@ -35,7 +41,7 @@ function AddNewsList() {
 
   useEffect(() => {
     getUserNews();
-  }, [addNewsResponse]);
+  }, [addNewsResponse, editNewsResponse]);
 
   return (
     <div>
@@ -53,7 +59,7 @@ function AddNewsList() {
               sm={2}
               xl={4}
             >
-              <NewsCard data={items} />
+              <NewsCard data={items} getUserNews={getUserNews()} />
             </Col>
           ))
         ) : (
