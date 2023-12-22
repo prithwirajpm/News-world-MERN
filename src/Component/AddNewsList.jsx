@@ -6,18 +6,26 @@ import AddNews from "./AddNews";
 import { usersNewsAPI } from "../services/allAPI";
 import {
   addNewsResponseContext,
+  deleteNewsResponseContext,
   editNewsResponseContext,
 } from "../Context/ContextShare";
 
 function AddNewsList() {
+  // ContextAPI
   const { addNewsResponse, setaddNewsResponse } = useContext(
     addNewsResponseContext
   );
   const { editNewsResponse, setEditNewsResponse } = useContext(
     editNewsResponseContext
   );
+  const { deleteNewsResponse, setdeleteNewsResponse } = useContext(
+    deleteNewsResponseContext
+  );
+
+  // States
   const [userNews, setUserNews] = useState([]);
 
+  // GetUserNews
   const getUserNews = async () => {
     if (sessionStorage.getItem("token")) {
       const token = sessionStorage.getItem("token");
@@ -41,7 +49,7 @@ function AddNewsList() {
 
   useEffect(() => {
     getUserNews();
-  }, [addNewsResponse, editNewsResponse]);
+  }, [addNewsResponse, editNewsResponse, deleteNewsResponse]);
 
   return (
     <div>
@@ -59,7 +67,7 @@ function AddNewsList() {
               sm={2}
               xl={4}
             >
-              <NewsCard data={items} getUserNews={getUserNews()} />
+              <NewsCard data={items} />
             </Col>
           ))
         ) : (

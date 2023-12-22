@@ -1,10 +1,15 @@
 import React, { createContext, useState } from "react";
 export const addNewsResponseContext = createContext();
 export const editNewsResponseContext = createContext();
+export const deleteNewsResponseContext = createContext();
+export const addNewsCommentResponseContext = createContext();
 
 function ContextShare({ children }) {
   const [addNewsResponse, setaddNewsResponse] = useState({});
   const [editNewsResponse, setEditNewsResponse] = useState({});
+  const [addCommentResponce, setAddCommentResponce] = useState({});
+  const [deleteNewsResponse, setdeleteNewsResponse] = useState({});
+
   return (
     <>
       <addNewsResponseContext.Provider
@@ -13,7 +18,16 @@ function ContextShare({ children }) {
         <editNewsResponseContext.Provider
           value={{ editNewsResponse, setEditNewsResponse }}
         >
-          {children}
+          <addNewsCommentResponseContext.Provider
+            value={{ addCommentResponce, setAddCommentResponce }}
+          >
+            {" "}
+            <deleteNewsResponseContext.Provider
+              value={{ deleteNewsResponse, setdeleteNewsResponse }}
+            >
+              {children}
+            </deleteNewsResponseContext.Provider>
+          </addNewsCommentResponseContext.Provider>
         </editNewsResponseContext.Provider>
       </addNewsResponseContext.Provider>
     </>

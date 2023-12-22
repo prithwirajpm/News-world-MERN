@@ -36,3 +36,53 @@ return await commonAPI("PUT",`${BASE_URL}/news/edit/${newsId}`,reqBody,reqHeader
 export const deleteNewsAPI = async(newsId,reqHeader)=>{
     return await commonAPI("DELETE",`${BASE_URL}/news/remove/${newsId}`,{},reqHeader)
     }
+
+
+// addCommentAPI
+export const addCommentAPI = async (userId,reqBody,reqHeader) => {
+    return await commonAPI("POST", `${BASE_URL}/news/addComment/${userId}`,reqBody,reqHeader);
+}
+
+
+// getALLCommentAPI
+export const getCommentAPI = async()=>{
+return await commonAPI("GET",`${BASE_URL}/news/allComment`,"","")
+}
+
+
+// DleteCommentAPI
+export const deleteCommentAPI = async(id,reqHeader)=>{
+    return await commonAPI("DELETE",`${BASE_URL}/news/removeComment/${id}`,{},reqHeader)
+}
+
+
+// likeNewsAPI
+export const likeNewsAPI = async (newsId, reqBody, reqHeader) => {
+    return await commonAPI(
+      "POST",
+      `${BASE_URL}/news/likeDislike/${newsId}`,
+      reqBody,
+      reqHeader
+    );
+  };
+
+//DislikeAPI
+  export const dislikeNewsAPI = async (newsId, reqBody, reqHeader) => {
+    return await commonAPI(
+        "PUT",
+        `${BASE_URL}/news/dislike/${newsId}`,
+        reqBody,
+        reqHeader
+    );
+};
+
+
+// GetLike And DisLike
+export const getLikesAndDislikesAPI = async (newsId,reqHeader) => {
+    return await commonAPI(
+        "GET",
+        `${BASE_URL}/news/likesAndDislikes/${newsId}`,
+        "", // No request body for GET requests
+        reqHeader
+    );
+};

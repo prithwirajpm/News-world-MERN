@@ -1,5 +1,3 @@
-// NewsCard.js
-
 import React, { useEffect, useState } from "react";
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
@@ -11,22 +9,49 @@ import Typography from "@mui/material/Typography";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import HeartBrokenIcon from "@mui/icons-material/HeartBroken";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
-import Collapse from "@mui/material/Collapse";
 import DeleteSweepOutlinedIcon from "@mui/icons-material/DeleteSweepOutlined";
-import AddNewsComment from "./AddNewsComment";
+import Collapse from "@mui/material/Collapse";
 import { Form } from "react-bootstrap";
 import { BASE_URL } from "../services/baseurl";
 import EditNews from "../Component/EditNews";
-import { deleteNewsAPI } from "../services/allAPI";
+import {
+  deleteCommentAPI,
+  deleteNewsAPI,
+  dislikeNewsAPI,
+  getCommentAPI,
+  getLikesAndDislikesAPI,
+  likeNewsAPI,
+} from "../services/allAPI";
+import AddNewsComment from "./AddNewsComment";
+import { useContext } from "react";
+import {
+  addNewsCommentResponseContext,
+  deleteNewsResponseContext,
+} from "../Context/ContextShare";
 
 export default function NewsCard({ data }) {
   const [loggedin, setLoggedin] = useState(false);
   const [expanded, setExpanded] = React.useState(false);
+  const [usersComment, setUsersComment] = useState([]);
+  const [userCommentDelete, setUserCommentDelete] = useState({});
+  const [likes, setLikes] = useState(0); // Initialize likes state
+  const [dislikes, setDislikes] = useState(0);
+  const { addCommentResponce, setAddCommentResponce } = useContext(
+    addNewsCommentResponseContext
+  );
+  const { deleteNewsResponse, setdeleteNewsResponse } = useContext(
+    deleteNewsResponseContext
+  );
+  const existingUserString = sessionStorage.getItem("existingUser");
+  const loggedUserId = existingUserString
+    ? JSON.parse(existingUserString)._id
+    : null;
 
   useEffect(() => {
     setLoggedin(!!sessionStorage.getItem("token"));
-  }, []);
+    getCommentNews();
+    getLikesAndDislikes();
+  }, [addCommentResponce, userCommentDelete]);
 
   const handleDlete = async (id) => {
     const token = sessionStorage.getItem("token");
@@ -37,7 +62,8 @@ export default function NewsCard({ data }) {
 
     const result = await deleteNewsAPI(id, reqHeader);
     if (result.status === 200) {
-      
+      alert("Delete News");
+      setdeleteNewsResponse(result.data);
     } else {
       alert(result.response.data);
     }
@@ -47,18 +73,120 @@ export default function NewsCard({ data }) {
     setExpanded(!expanded);
   };
 
+  // DeleteComment
+
+  const handleDleteComment = async (id) => {
+    const token = sessionStorage.getItem("token");
+    const reqHeader = {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    };
+
+    const result = await deleteCommentAPI(id, reqHeader);
+    if (result.status === 200) {
+      alert("Delete This Comment ");
+      setUserCommentDelete(result.data);
+    } else {
+      alert(result.response.data);
+    }
+  };
+  // GetComment List
+
+  const getCommentNews = async () => {
+    if (sessionStorage.getItem("token")) {
+      const token = sessionStorage.getItem("token");
+      const reqHeader = {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      };
+      try {
+        const result = await getCommentAPI(reqHeader);
+        if (result.status === 200) {
+          setUsersComment(result.data);
+          console.log(result.data);
+        } else {
+          console.log(result);
+        }
+      } catch (error) {
+        console.error("Error fetching user news:", error);
+      }
+    }
+  };
+
+  // LIKEBUtton
+  const handleLike = async () => {
+    try {
+      const token = sessionStorage.getItem("token");
+      const reqHeader = {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      };
+
+      const result = await likeNewsAPI(data._id, {}, reqHeader);
+      if (result.status === 200) {
+        // Update the likes count in the state
+        setLikes(result.data.likes);
+      } else {
+        alert(result.response.data);
+      }
+    } catch (error) {
+      console.error("Error handling like:", error);
+    }
+  };
+
+  // DISLIKE button
+  const handleDislike = async () => {
+    try {
+      const token = sessionStorage.getItem("token");
+      const reqHeader = {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      };
+
+      const result = await dislikeNewsAPI(data._id, {}, reqHeader);
+      if (result.status === 200) {
+        // Update the dislikes count in the state
+        setDislikes(result.data.dislikes);
+      } else {
+        alert(result.response.data);
+      }
+    } catch (error) {
+      console.error("Error handling dislike:", error);
+    }
+  };
+
+  const getLikesAndDislikes = async () => {
+    try {
+      const result = await getLikesAndDislikesAPI(data._id);
+      if (result.status === 200) {
+        console.log("Received data:", result.data);
+        setLikes(result.data.likes);
+        setDislikes(result.data.dislikes);
+        console.log("Likes and dislikes updated:", likes, dislikes);
+      } else {
+        alert(result.response.data);
+      }
+    } catch (error) {
+      console.error("Error fetching likes and dislikes:", error);
+    }
+  };
+
   return (
     <Card sx={{ maxWidth: 345 }}>
       <CardHeader
         action={
-          <div>
-            <IconButton aria-label="settings">
-              {loggedin ? <EditNews editProject={data} /> : null}
-            </IconButton>
-            <IconButton aria-label="settings">
-              <DeleteSweepOutlinedIcon onClick={() => handleDlete(data._id)} />
-            </IconButton>
-          </div>
+          loggedUserId && loggedUserId == data.userId ? (
+            <div>
+              <IconButton aria-label="settings">
+                <EditNews editProject={data} />
+              </IconButton>
+              <IconButton aria-label="settings">
+                <DeleteSweepOutlinedIcon
+                  onClick={() => handleDlete(data._id)}
+                />
+              </IconButton>
+            </div>
+          ) : null
         }
         title={data.newsTitle.slice(0, 20)}
         subheader={data.newsDate}
@@ -77,12 +205,12 @@ export default function NewsCard({ data }) {
       {loggedin ? (
         <CardActions disableSpacing>
           <IconButton aria-label="add to favorites">
-            <span style={{ fontSize: "10px" }}>2</span>
-            <FavoriteIcon />
+            <span style={{ fontSize: "10px" }}>{likes}</span>
+            <FavoriteIcon onClick={() => handleLike(data._id)} />
           </IconButton>
           <IconButton aria-label="add to unfavorite">
-            <span style={{ fontSize: "10px" }}>2</span>
-            <HeartBrokenIcon />
+            <span style={{ fontSize: "10px" }}>{dislikes}</span>
+            <HeartBrokenIcon onClick={() => handleDislike(data._id)} />
           </IconButton>
           <IconButton aria-label="comment"></IconButton>
           <IconButton
@@ -92,7 +220,7 @@ export default function NewsCard({ data }) {
           >
             <ExpandMoreIcon />
           </IconButton>
-          <AddNewsComment />
+          <AddNewsComment newsFechDetails={data} />
         </CardActions>
       ) : (
         <CardActions>Nothing</CardActions>
@@ -101,21 +229,40 @@ export default function NewsCard({ data }) {
         <CardContent>
           <Typography paragraph>Method:</Typography>
           <Typography paragraph>
-            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <div className="d-flex justify-content-between">
-                {" "}
-                <Form.Label style={{ fontSize: "10px" }}>Heading</Form.Label>
-                <Form.Label style={{ fontSize: "10px", color: "grey" }}>
-                  <DeleteSweepOutlinedIcon />
-                </Form.Label>
-              </div>
-              <Form.Control
-                className="border rounded p-2"
-                type="text"
-                placeholder="comment"
-                readOnly
-              />
-            </Form.Group>
+            {usersComment?.length > 0 &&
+            usersComment.some((item) => item.newsId === data._id)
+              ? usersComment
+                  .filter((item) => item.newsId === data._id)
+                  .map((item) => (
+                    <Form.Group
+                      className="mb-3"
+                      controlId="exampleForm.ControlInput1"
+                      key={item.commentText}
+                    >
+                      <div className="d-flex justify-content-between">
+                        <Form.Label style={{ fontSize: "10px" }}>
+                          Heading
+                        </Form.Label>
+                        {loggedUserId && loggedUserId == item.userId ? (
+                          <Form.Label
+                            style={{ fontSize: "10px", color: "grey" }}
+                          >
+                            <DeleteSweepOutlinedIcon
+                              onClick={() => handleDleteComment(item?._id)}
+                            />
+                          </Form.Label>
+                        ) : null}
+                      </div>
+                      <Form.Control
+                        className="border rounded p-2"
+                        type="text"
+                        placeholder="comment"
+                        readOnly
+                        value={item?.commentText}
+                      />
+                    </Form.Group>
+                  ))
+              : null}
           </Typography>
         </CardContent>
       </Collapse>
