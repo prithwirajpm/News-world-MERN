@@ -54,7 +54,7 @@ function NewsAuth({ Register }) {
           password: "",
         });
         if (result.data.existingUser.isAdmin == true) {
-          navigate("/admindasboard");
+          navigate("/adminDasboardNew");
         } else {
           navigate("/addnewslist");
         }

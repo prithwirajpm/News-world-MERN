@@ -12,6 +12,7 @@ import Admin from './AdminComponent/Admin';
 import UserList from './AdminComponent/UserList';
 import { useState } from 'react';
 import NewsList from './AdminComponent/NewsList';
+import AdminDash from './AdminComponent/AdminDash';
 
 function App() {
   const [showadmin,setshowadmin]=useState(true)
@@ -29,6 +30,7 @@ function App() {
         <Route path='/admindasboard' element={<Admin setshowadmin={setshowadmin}/>}></Route>
         <Route path='/userList' element={<UserList setshowadmin={setshowadmin}/>}></Route>
         <Route path='/newsList' element={<NewsList setshowadmin={setshowadmin}/>}></Route>
+        <Route path='/adminDasboardNew' element={<AdminDash setshowadmin={setshowadmin}/>}></Route>
         Prithwiraj
       </Routes>
       {showadmin&&<NewsFooter/>}

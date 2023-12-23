@@ -30,6 +30,9 @@ function Admin({ setshowadmin }) {
         style={{ width: "200Px" }}
       >
         <div className="d-flex flex-column">
+          <Link to={"/adminDasboardNew"} className="pt-5  text-decoration-none">
+            DASBOARD
+          </Link>
           <Link to={"/userList"} className="pt-5  text-decoration-none">
             USER LIST
           </Link>
