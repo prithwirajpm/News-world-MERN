@@ -8,11 +8,16 @@ import NewsAuth from './Component/NewsAuth';
 import NewsDashBoard from './Pages/NewsDashBoard';
 import ListCommand from './Component/ListCommand';
 import AddNewsList from './Component/AddNewsList';
+import Admin from './AdminComponent/Admin';
+import UserList from './AdminComponent/UserList';
+import { useState } from 'react';
+import NewsList from './AdminComponent/NewsList';
 
 function App() {
+  const [showadmin,setshowadmin]=useState(true)
   return (
     <div className="App">
-      <NewsNavBar />
+     {showadmin&&<NewsNavBar />} 
       <Routes>
         <Route path='/' element={<NewsBody />}></Route>
         {/* <Route path='/login' element={<NewsLogin />}></Route> */}
@@ -21,9 +26,13 @@ function App() {
         <Route path='/dashbord' element={<NewsDashBoard />}></Route>
         <Route path='/addnewslist' element={<AddNewsList />}></Route>
         <Route path='/listcomment' element={<ListCommand />}></Route>
+        <Route path='/admindasboard' element={<Admin setshowadmin={setshowadmin}/>}></Route>
+        <Route path='/userList' element={<UserList setshowadmin={setshowadmin}/>}></Route>
+        <Route path='/newsList' element={<NewsList setshowadmin={setshowadmin}/>}></Route>
         Prithwiraj
       </Routes>
-      <NewsFooter />
+      {showadmin&&<NewsFooter/>}
+      
     </div>
   );
 }

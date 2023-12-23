@@ -86,3 +86,8 @@ export const getLikesAndDislikesAPI = async (newsId,reqHeader) => {
         reqHeader
     );
 };
+
+// AllUserAPI
+export const getAllUsersAPI = async(reqHeader)=>{
+    return await commonAPI("GET",`${BASE_URL}/admin/viewusers`,"",reqHeader)
+}
