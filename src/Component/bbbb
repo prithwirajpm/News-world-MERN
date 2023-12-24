@@ -1,0 +1,71 @@
+
+            <div className="d-flex justify-content-start">
+              <img
+                src="https://blog.newspaperclub.com/wp-content/uploads/2023/08/grasby-leaves.gif"
+                alt=""
+                srcset=""
+                className="m-2 rounded-circle shadow"
+                style={{ width: "150px", height: "150px" }}
+              />
+              <img
+                src="https://blog.newspaperclub.com/wp-content/uploads/2023/02/100th-bday.gif"
+                alt=""
+                srcset=""
+                className="m-2 rounded-circle shadow"
+                style={{ width: "150px", height: "150px" }}
+              />
+              <img
+                src=""
+                alt=""
+                className="m-2 rounded-circle shadow"
+                srcset="https://blog.newspaperclub.com/wp-content/uploads/2023/01/vintage-template.gif"
+                style={{ width: "150px", height: "150px" }}
+              />
+            </div>
+            <div className="d-flex justify-content-center">
+              <img
+                src="https://blog.newspaperclub.com/wp-content/uploads/2023/10/Vintage-template-broadsheet.gif"
+                alt=""
+                className="m-2 rounded-circle shadow"
+                srcset=""
+                style={{ width: "150px", height: "150px" }}
+              />
+              <img
+                src="https://blog.newspaperclub.com/wp-content/uploads/2023/01/business-template.gif"
+                alt=""
+                className="m-2 rounded-circle shadow"
+                srcset=""
+                style={{ width: "150px", height: "150px" }}
+              />
+              <img
+                src=""
+                alt=""
+                className="m-2 rounded-circle shadow"
+                srcset="https://blog.newspaperclub.com/wp-content/uploads/2023/08/ER-Designs.gif"
+                style={{ width: "150px", height: "150px" }}
+              />
+            </div>
+            <div className="d-flex justify-content-end">
+              <img
+                src="https://blog.newspaperclub.com/wp-content/uploads/2023/11/photobook.gif"
+                alt=""
+                className="m-2 rounded-circle shadow"
+                srcset=""
+                style={{ width: "150px", height: "150px" }}
+              />
+              <img
+                src="https://blog.newspaperclub.com/wp-content/uploads/2023/01/wedding-gif-slower.gif"
+                alt=""
+                srcset=""
+                className="m-2 rounded-circle shadow"
+                style={{ width: "150px", height: "150px" }}
+              />
+              <img
+                src=""
+                alt=""
+                className="mt-2 rounded-circle shadow ms-2 mb-2"
+                srcset="https://blog.newspaperclub.com/wp-content/uploads/2023/01/celebration-newspaper.gif"
+                style={{ width: "150px", height: "150px" }}
+              />
+            </div>
+          </div>

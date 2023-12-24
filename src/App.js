@@ -13,6 +13,7 @@ import UserList from './AdminComponent/UserList';
 import { useState } from 'react';
 import NewsList from './AdminComponent/NewsList';
 import AdminDash from './AdminComponent/AdminDash';
+import NewsReport from './Component/NewsReport';
 
 function App() {
   const [showadmin,setshowadmin]=useState(true)
@@ -27,6 +28,7 @@ function App() {
         <Route path='/dashbord' element={<NewsDashBoard />}></Route>
         <Route path='/addnewslist' element={<AddNewsList />}></Route>
         <Route path='/listcomment' element={<ListCommand />}></Route>
+        <Route path='/NewsReport' element={<NewsReport />}></Route>
         <Route path='/admindasboard' element={<Admin setshowadmin={setshowadmin}/>}></Route>
         <Route path='/userList' element={<UserList setshowadmin={setshowadmin}/>}></Route>
         <Route path='/newsList' element={<NewsList setshowadmin={setshowadmin}/>}></Route>
