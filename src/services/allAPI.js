@@ -91,3 +91,14 @@ export const getLikesAndDislikesAPI = async (newsId,reqHeader) => {
 export const getAllUsersAPI = async(reqHeader)=>{
     return await commonAPI("GET",`${BASE_URL}/admin/viewusers`,"",reqHeader)
 }
+
+
+// ReportAPI
+export const reportNewsAPI = async (id, reqHeader) => {
+    return await commonAPI(
+        "PUT",
+        `${BASE_URL}/news/reportNews/${id}`,
+        {}, // Request body, if needed
+        reqHeader
+    );
+};

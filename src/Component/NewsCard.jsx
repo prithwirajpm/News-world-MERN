@@ -11,9 +11,11 @@ import HeartBrokenIcon from "@mui/icons-material/HeartBroken";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import DeleteSweepOutlinedIcon from "@mui/icons-material/DeleteSweepOutlined";
 import Collapse from "@mui/material/Collapse";
+import BlockIcon from "@mui/icons-material/Block";
 import { Form } from "react-bootstrap";
 import { BASE_URL } from "../services/baseurl";
 import EditNews from "../Component/EditNews";
+import "animate.css";
 import {
   deleteCommentAPI,
   deleteNewsAPI,
@@ -21,6 +23,7 @@ import {
   getCommentAPI,
   getLikesAndDislikesAPI,
   likeNewsAPI,
+  reportNewsAPI,
 } from "../services/allAPI";
 import AddNewsComment from "./AddNewsComment";
 import { useContext } from "react";
@@ -34,6 +37,7 @@ export default function NewsCard({ data }) {
   const [expanded, setExpanded] = React.useState(false);
   const [usersComment, setUsersComment] = useState([]);
   const [userCommentDelete, setUserCommentDelete] = useState({});
+  const [report, SetRepot] = useState(true);
   const [likes, setLikes] = useState(0); // Initialize likes state
   const [dislikes, setDislikes] = useState(0);
   const { addCommentResponce, setAddCommentResponce } = useContext(
@@ -155,6 +159,7 @@ export default function NewsCard({ data }) {
     }
   };
 
+  // GetALLDATA
   const getLikesAndDislikes = async () => {
     try {
       const result = await getLikesAndDislikesAPI(data._id);
@@ -168,6 +173,31 @@ export default function NewsCard({ data }) {
       }
     } catch (error) {
       console.error("Error fetching likes and dislikes:", error);
+    }
+  };
+
+  // REportSection
+  const handleReport = async (id) => {
+    try {
+      const token = sessionStorage.getItem("token");
+      const reqHeader = {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      };
+
+      const result = await reportNewsAPI(id, reqHeader);
+
+      if (result.status === 200) {
+        // Update the state or perform any action upon successful report
+        alert("Successfully reported the news.");
+        SetRepot(false); // Assuming setReport is a state updater function
+      } else {
+        // Handle error response from the API
+        alert(result.response.data);
+      }
+    } catch (error) {
+      console.error("Error handling report:", error);
+      // Handle other errors (e.g., network issues)
     }
   };
 
@@ -213,6 +243,10 @@ export default function NewsCard({ data }) {
             <HeartBrokenIcon onClick={() => handleDislike(data._id)} />
           </IconButton>
           <IconButton aria-label="comment"></IconButton>
+
+          <IconButton style={{ marginLeft: "100px" }}>
+            <AddNewsComment newsFechDetails={data} />
+          </IconButton>
           <IconButton
             onClick={handleExpandClick}
             aria-expanded={expanded}
@@ -220,7 +254,14 @@ export default function NewsCard({ data }) {
           >
             <ExpandMoreIcon />
           </IconButton>
-          <AddNewsComment newsFechDetails={data} />
+          <IconButton>
+            {report && (
+              <BlockIcon
+                className="text-danger"
+                onClick={() => handleReport(data._id)}
+              />
+            )}
+          </IconButton>
         </CardActions>
       ) : (
         <CardActions>Nothing</CardActions>
