@@ -29,8 +29,10 @@ import AddNewsComment from "./AddNewsComment";
 import { useContext } from "react";
 import {
   addNewsCommentResponseContext,
+  deleteNewsResponseAlertContext,
   deleteNewsResponseContext,
 } from "../Context/ContextShare";
+import { Link } from "react-router-dom";
 
 export default function NewsCard({ data }) {
   const [loggedin, setLoggedin] = useState(false);
@@ -45,6 +47,9 @@ export default function NewsCard({ data }) {
   );
   const { deleteNewsResponse, setdeleteNewsResponse } = useContext(
     deleteNewsResponseContext
+  );
+  const { dleteAlertResponse, setdeleteAlertResponse } = useContext(
+    deleteNewsResponseAlertContext
   );
   const existingUserString = sessionStorage.getItem("existingUser");
   const loggedUserId = existingUserString
@@ -201,6 +206,10 @@ export default function NewsCard({ data }) {
     }
   };
 
+  useEffect(() => {
+    setdeleteAlertResponse();
+  }, []);
+
   return (
     <Card sx={{ maxWidth: 345 }}>
       <CardHeader
@@ -218,7 +227,7 @@ export default function NewsCard({ data }) {
             </div>
           ) : null
         }
-        title={data.newsTitle.slice(0, 20)}
+        title={data.newsTitle ? data.newsTitle.slice(0, 20) : null}
         subheader={data.newsDate}
       />
       <CardMedia
@@ -229,7 +238,8 @@ export default function NewsCard({ data }) {
       />
       <CardContent>
         <Typography variant="body2" color="text.secondary">
-          {data.newsDetails}
+          {data.newsDetails ? data.newsDetails.slice(0, 50) : null}.....
+          <Link to={`/Readmore/${data._id}`}>Read More...</Link>
         </Typography>
       </CardContent>
       {loggedin ? (

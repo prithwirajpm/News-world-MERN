@@ -29,9 +29,9 @@ function AdminDash({ setshowadmin }) {
           </Link>
         </div>
         <div className="shadow m-5 col-3 text-center p-5">
-          <Link to={"/userList"} className="pt-5  text-decoration-none">
+          <Link to={"/blockNews"} className="pt-5  text-decoration-none">
             <PostAddIcon style={{ fontSize: "100px" }} />
-            <h3>ADD NEWS</h3>
+            <h3>Block News</h3>
           </Link>
         </div>
       </div>
