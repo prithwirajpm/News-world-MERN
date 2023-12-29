@@ -102,3 +102,8 @@ export const reportNewsAPI = async (id, reqHeader) => {
         reqHeader
     );
 };
+ 
+/// EditUserProfile
+export const editUserAPI = async (userId,reqBody, reqHeader) => {
+    return await commonAPI("PUT",`${BASE_URL}/user/editprofile/${userId}`,reqBody,reqHeader)
+}

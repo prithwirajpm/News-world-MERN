@@ -1,10 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import DataTable from "react-data-table-component";
+import { userListIdResponseContext } from "../Context/ContextShare";
 import { getAllUsersAPI } from "../services/allAPI";
 import Admin from "./Admin";
 
 function UserList({ setshowadmin }) {
   const [listUser, setListUser] = useState([]);
+  const { userListIdResponse, setuserListIdResponse } = useContext(
+    userListIdResponseContext
+  );
 
   const getAllUsers = async () => {
     try {

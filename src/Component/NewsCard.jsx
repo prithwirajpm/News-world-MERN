@@ -29,7 +29,6 @@ import AddNewsComment from "./AddNewsComment";
 import { useContext } from "react";
 import {
   addNewsCommentResponseContext,
-  deleteNewsResponseAlertContext,
   deleteNewsResponseContext,
 } from "../Context/ContextShare";
 import { Link } from "react-router-dom";
@@ -47,9 +46,6 @@ export default function NewsCard({ data }) {
   );
   const { deleteNewsResponse, setdeleteNewsResponse } = useContext(
     deleteNewsResponseContext
-  );
-  const { dleteAlertResponse, setdeleteAlertResponse } = useContext(
-    deleteNewsResponseAlertContext
   );
   const existingUserString = sessionStorage.getItem("existingUser");
   const loggedUserId = existingUserString
@@ -206,9 +202,7 @@ export default function NewsCard({ data }) {
     }
   };
 
-  useEffect(() => {
-    setdeleteAlertResponse();
-  }, []);
+  useEffect(() => {}, []);
 
   return (
     <Card sx={{ maxWidth: 345 }}>

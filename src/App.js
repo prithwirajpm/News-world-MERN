@@ -16,6 +16,7 @@ import AdminDash from './AdminComponent/AdminDash';
 import NewsReport from './Component/NewsReport';
 import BlockNews from './AdminComponent/BlockNews';
 import ReadMore from './Component/ReadMore';
+import AdminAddNews from './AdminComponent/AdminAddNews';
 
 function App() {
   const [showadmin,setshowadmin]=useState(true)
@@ -36,6 +37,7 @@ function App() {
         <Route path='/newsList' element={<NewsList setshowadmin={setshowadmin}/>}></Route>
         <Route path='/adminDasboardNew' element={<AdminDash setshowadmin={setshowadmin}/>}></Route>
         <Route path='/blockNews' element={<BlockNews setshowadmin={setshowadmin}/>}></Route>
+        <Route path='/adminaddNews' element={<AdminAddNews setshowadmin={setshowadmin}/>}></Route>
         <Route path='/Readmore/:id' element={<ReadMore />}></Route>
         Prithwiraj
       </Routes>

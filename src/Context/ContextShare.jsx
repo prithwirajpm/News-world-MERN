@@ -3,14 +3,14 @@ export const addNewsResponseContext = createContext();
 export const editNewsResponseContext = createContext();
 export const deleteNewsResponseContext = createContext();
 export const addNewsCommentResponseContext = createContext();
-export const deleteNewsResponseAlertContext = createContext();
+export const userListIdResponseContext = createContext();
 
 function ContextShare({ children }) {
   const [addNewsResponse, setaddNewsResponse] = useState({});
   const [editNewsResponse, setEditNewsResponse] = useState({});
   const [addCommentResponce, setAddCommentResponce] = useState({});
   const [deleteNewsResponse, setdeleteNewsResponse] = useState({});
-  const [dleteAlertResponse, setdeleteAlertResponse] = useState();
+  const [userListIdResponse, setuserListIdResponse] = useState({});
 
   return (
     <>
@@ -27,12 +27,12 @@ function ContextShare({ children }) {
             <deleteNewsResponseContext.Provider
               value={{ deleteNewsResponse, setdeleteNewsResponse }}
             >
-              <deleteNewsResponseAlertContext.Provider
-                value={{ dleteAlertResponse, setdeleteAlertResponse }}
+              <userListIdResponseContext.Provider
+                value={{ userListIdResponse, setuserListIdResponse }}
               >
                 {" "}
                 {children}
-              </deleteNewsResponseAlertContext.Provider>
+              </userListIdResponseContext.Provider>
             </deleteNewsResponseContext.Provider>
           </addNewsCommentResponseContext.Provider>
         </editNewsResponseContext.Provider>
