@@ -107,3 +107,9 @@ export const reportNewsAPI = async (id, reqHeader) => {
 export const editUserAPI = async (userId,reqBody, reqHeader) => {
     return await commonAPI("PUT",`${BASE_URL}/user/editprofile/${userId}`,reqBody,reqHeader)
 }
+
+
+// getALL user
+export const getAllUsersIdsAPI = async(reqHeader)=>{
+    return await commonAPI("GET",`${BASE_URL}/user/allusers`,"",reqHeader)
+}

@@ -21,6 +21,7 @@ import AdminAddNews from './AdminComponent/AdminAddNews';
 function App() {
   const [showadmin,setshowadmin]=useState(true)
   return (
+  
     <div className="App">
      {showadmin&&<NewsNavBar />} 
       <Routes>
@@ -29,7 +30,9 @@ function App() {
         <Route path='/auth' element={<NewsAuth/>}></Route>
         <Route path='/register' element={<NewsAuth Register/>}></Route>
         <Route path='/dashbord' element={<NewsDashBoard />}></Route>
+     
         <Route path='/addnewslist' element={<AddNewsList />}></Route>
+       
         <Route path='/listcomment' element={<ListCommand />}></Route>
         <Route path='/NewsReport' element={<NewsReport />}></Route>
         <Route path='/admindasboard' element={<Admin setshowadmin={setshowadmin}/>}></Route>

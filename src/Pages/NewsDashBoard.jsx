@@ -50,11 +50,7 @@ function NewsDashBoard() {
 
   useEffect(() => {
     if (userProfile.profile) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setPreview(reader.result);
-      };
-      reader.readAsDataURL(userProfile.profile);
+      setPreview();
     } else {
       setPreview(existingImage ? `${BASE_URL}/uploads/${existingImage}` : "");
     }

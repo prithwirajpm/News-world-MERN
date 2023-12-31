@@ -3,12 +3,15 @@ import NewsDashBoard from "../Pages/NewsDashBoard";
 import NewsCard from "./NewsCard";
 import { Col } from "react-bootstrap";
 import AddNews from "./AddNews";
-import { usersNewsAPI } from "../services/allAPI";
+import { allNewsAPI, usersNewsAPI } from "../services/allAPI";
 import {
   addNewsResponseContext,
   deleteNewsResponseContext,
   editNewsResponseContext,
 } from "../Context/ContextShare";
+import Alert from "@mui/material/Alert";
+import Button from "@mui/material/Button";
+import Stack from "@mui/material/Stack";
 
 function AddNewsList() {
   // ContextAPI
@@ -24,6 +27,26 @@ function AddNewsList() {
 
   // States
   const [userNews, setUserNews] = useState([]);
+  const [listNews, setListNews] = useState([]);
+  const [listUser, setListUser] = useState();
+
+  // getIds
+  const getIdDetails = async () => {
+    const usersIdes = sessionStorage.getItem("existingUser");
+    const usersIdesArray = JSON.parse(usersIdes);
+    setListUser(usersIdesArray._id);
+  };
+  console.log(listUser);
+  // getAll project
+  const getAllProjects = async () => {
+    const result = await allNewsAPI();
+    if (result.status === 200) {
+      console.log(result.data);
+      setListNews(result.data);
+    } else {
+      console.log(result.response.data);
+    }
+  };
 
   // GetUserNews
   const getUserNews = async () => {
@@ -49,6 +72,8 @@ function AddNewsList() {
 
   useEffect(() => {
     getUserNews();
+    getAllProjects();
+    getIdDetails();
   }, [addNewsResponse, editNewsResponse, deleteNewsResponse]);
 
   return (
@@ -56,6 +81,15 @@ function AddNewsList() {
       <NewsDashBoard />
       <div className="d-flex justify-content-end align-items-start m-3">
         <AddNews />
+      </div>
+      <div>
+        <Stack sx={{ width: "80%" }} spacing={2}>
+          {listNews.some(
+            (item) => item.blockSection > 2 && item.userId == listUser
+          ) ? (
+            <Alert severity="warning">There are blocked news items.</Alert>
+          ) : null}
+        </Stack>
       </div>
       <div className="row w-100 mt-5 mb-5">
         {userNews?.length > 0 ? (

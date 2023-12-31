@@ -3,13 +3,18 @@ import DataTable from "react-data-table-component";
 import { allNewsAPI, deleteNewsAPI } from "../services/allAPI";
 import { BASE_URL } from "../services/baseurl";
 import Admin from "./Admin";
+import { AlertContext } from "../Component/AlertProvider";
+
 import { deleteNewsResponseContext } from "../Context/ContextShare";
 
 function BlockNews({ setshowadmin }) {
   const [listNews, setListNews] = useState([]);
+
   const { deleteNewsResponse, setdeleteNewsResponse } = useContext(
     deleteNewsResponseContext
   );
+
+  const { alertMessage, setAlertMessage } = useContext(AlertContext);
 
   const filteredListNews = listNews.filter((item) => item.blockSection > 2);
 
@@ -23,25 +28,30 @@ function BlockNews({ setshowadmin }) {
     }
   };
 
-  const handleDlete = async (id) => {
+  const handleDelete = async (id) => {
     const token = sessionStorage.getItem("token");
     const reqHeader = {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
     };
 
-    const result = await deleteNewsAPI(id, reqHeader);
-    if (result.status === 200) {
-      alert("Delete the News");
-      console.log(result.data);
-    } else {
-      alert(result.response.data);
+    try {
+      const result = await deleteNewsAPI(id, reqHeader);
+      if (result.status === 200) {
+        alert("Are you sure you want to delete this post?");
+        setAlertMessage(
+          "A project has been deleted by the admin. Please check."
+        );
+        setdeleteNewsResponse(result.data);
+      }
+    } catch (error) {
+      console.error("Error deleting post:", error);
     }
   };
 
   useEffect(() => {
     getAllProjects();
-  }, [deleteNewsResponse]);
+  }, []);
 
   useEffect(() => {
     setshowadmin(false);
@@ -69,7 +79,7 @@ function BlockNews({ setshowadmin }) {
       name: "Actions",
       cell: (row) => (
         <div>
-          <button onClick={() => handleDlete(row._id)}>Delete</button>
+          <button onClick={() => handleDelete(row._id)}>Delete</button>
         </div>
       ),
     },
