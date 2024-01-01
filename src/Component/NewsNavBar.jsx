@@ -5,9 +5,11 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import React, { useEffect, useState } from "react";
+import UserProfile from "./UserProfile";
 
 function NewsNavBar() {
   const [loggedin, setLoggedin] = useState(false);
+  const [listUser, setListUser] = useState({});
   const navigate = useNavigate();
   const handleLogout = () => {
     sessionStorage.removeItem("existingUser");
@@ -66,7 +68,23 @@ function NewsNavBar() {
                 </Link>
               </Nav.Link>
               {loggedin && (
-                <Nav.Link className="text-dark" onClick={handleLogout}>
+                <Nav.Link
+                  style={{
+                    textDecoration: "none",
+                    color: "Black",
+                    fontSize: "20px",
+                  }}
+                ></Nav.Link>
+              )}
+              {loggedin && (
+                <Nav.Link
+                  className="text-dark"
+                  style={{
+                    color: "Black",
+                    fontSize: "20px",
+                  }}
+                  onClick={handleLogout}
+                >
                   Logout
                 </Nav.Link>
               )}

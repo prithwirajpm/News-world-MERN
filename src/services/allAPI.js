@@ -103,13 +103,13 @@ export const reportNewsAPI = async (id, reqHeader) => {
     );
 };
  
-/// EditUserProfile
-export const editUserAPI = async (userId,reqBody, reqHeader) => {
-    return await commonAPI("PUT",`${BASE_URL}/user/editprofile/${userId}`,reqBody,reqHeader)
-}
-
-
 // getALL user
 export const getAllUsersIdsAPI = async(reqHeader)=>{
     return await commonAPI("GET",`${BASE_URL}/user/allusers`,"",reqHeader)
+}
+
+
+// EditUser
+export const editProfileAPI = async(reqBody,reqHeader)=>{
+    return await commonAPI("PUT",`${BASE_URL}/user/editprofile`,reqBody,reqHeader)
 }

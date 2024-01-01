@@ -56,36 +56,6 @@ function NewsDashBoard() {
     }
   }, [userProfile.profile, existingImage]);
 
-  const handleProfileEdit = async (e) => {
-    e.preventDefault();
-
-    try {
-      const userId = usId;
-      const reqBody = new FormData();
-      reqBody.append("profile", userProfile.profile);
-      const token = sessionStorage.getItem("token");
-      const reqHeader = {
-        Authorization: `Bearer ${token}`,
-      };
-
-      // Check if the profile image has changed
-      if (userProfile.profile) {
-        const updatedUserProfile = await editUserAPI(
-          userId,
-          reqBody,
-          reqHeader
-        );
-        console.log("User profile updated successfully:", updatedUserProfile);
-
-        // Update existingImage and preview with the new image URL
-        setExistingImage(updatedUserProfile.profile);
-        setPreview(URL.createObjectURL(userProfile.profile));
-      }
-    } catch (error) {
-      console.error("Error updating user profile:", error);
-    }
-  };
-
   return (
     <div>
       <div className="profileImg d-flex justify-content-start align-items-center">
@@ -112,7 +82,6 @@ function NewsDashBoard() {
               onChange={handleFileChange}
             />
             <EditIcon style={{ color: "white" }} />
-            <button onClick={handleProfileEdit}>ddd</button>
           </Form>
         </label>
       </div>

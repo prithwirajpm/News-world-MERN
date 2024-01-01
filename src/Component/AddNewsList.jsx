@@ -12,6 +12,7 @@ import {
 import Alert from "@mui/material/Alert";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
+import UserProfile from "./UserProfile";
 
 function AddNewsList() {
   // ContextAPI
@@ -78,16 +79,23 @@ function AddNewsList() {
 
   return (
     <div>
-      <NewsDashBoard />
       <div className="d-flex justify-content-end align-items-start m-3">
         <AddNews />
+        <UserProfile />
       </div>
-      <div>
+      <div className="d-flex justify-content-center">
         <Stack sx={{ width: "80%" }} spacing={2}>
           {listNews.some(
             (item) => item.blockSection > 2 && item.userId == listUser
           ) ? (
-            <Alert severity="warning">There are blocked news items.</Alert>
+            <Alert severity="warning">
+              Please delete this News :
+              {
+                listNews.find(
+                  (item) => item.blockSection > 2 && item.userId === listUser
+                ).newsTitle
+              }{" "}
+            </Alert>
           ) : null}
         </Stack>
       </div>
