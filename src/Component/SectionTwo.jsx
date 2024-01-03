@@ -20,15 +20,15 @@ function SectionTwo() {
           </div>
           <div>
             <p style={{ textAlign: "justify", fontSize: "25px" }}>
-              "Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              Accusantium, expedita, aspernatur qui ipsam voluptates mollitia
-              quo deserunt sequi iusto ad soluta dolor a aperiam. Corporis
-              exercitationem recusandae eaque provident reprehenderit!. Lorem
-              ipsum dolor sit amet consectetur adipisicing elit. Corrupti
-              molestias ab, facere quibusdam optio ullam possimus sapiente saepe
-              ut aliquid est earum eum mollitia assumenda explicabo qui a
-              adipisci enim! Lorem ipsum dolor sit amet consectetur adipisicing
-              elit. Nemo facere alias quas, modi perspiciatis deleniti eaque"
+              "Welcome to News World! It's my MEAN stack project, aiming to
+              reveal the truth. Every user is a reporter; log in to report news,
+              edit, and delete. Read news without logging in. Express opinions
+              with likes, dislikes, comments, and report news for blocking. Two
+              modules: User and Admin. Admin views user lists, news reports, and
+              acts as a reporter. Alerts for reported news. Admin deletes
+              rule-breaking news. Users edit profiles. Aiming for a transparent
+              and accountable news space in the News World. Exciting journey
+              into truth!"
             </p>
             <p style={{ textAlign: "right", fontSize: "25px" }}>Prithwiraj</p>
           </div>

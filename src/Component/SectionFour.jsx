@@ -12,15 +12,19 @@ function SectionFour() {
           </div>
           <div>
             <p style={{ textAlign: "justify", fontSize: "25px" }}>
-              "Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              Accusantium, expedita, aspernatur qui ipsam voluptates mollitia
-              quo deserunt sequi iusto ad soluta dolor a aperiam. Corporis
-              exercitationem recusandae eaque provident reprehenderit!. Lorem
-              ipsum dolor sit amet consectetur adipisicing elit. Corrupti
-              molestias ab, facere quibusdam optio ullam possimus sapiente saepe
-              ut aliquid est earum eum mollitia assumenda explicabo qui a
-              adipisci enim! Lorem ipsum dolor sit amet consectetur adipisicing
-              elit. Nemo facere alias quas, modi perspiciatis deleniti eaque"
+              "News World, a dynamic platform, offers users an array of features
+              to enhance their engagement with news content. To access reporter
+              functionalities, users log in, enabling actions such as uploading,
+              editing, and deleting news articles. Reading news articles,
+              liking, disliking, and commenting are available even without
+              logging in. Users can also edit their profiles for a personalized
+              experience. The Admin module provides administrators with a
+              comprehensive view, allowing them to act as reporters, manage news
+              articles, and receive alerts for reported content. Admins can
+              swiftly delete articles violating policies and edit their
+              profiles, ensuring effective oversight. This feature-rich
+              environment encourages user interaction while maintaining platform
+              integrity through administrative control."
             </p>
           </div>
         </div>
