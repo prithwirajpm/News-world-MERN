@@ -20,7 +20,7 @@ function SectionTwo() {
           </div>
           <div>
             <p style={{ textAlign: "justify", fontSize: "25px" }}>
-              "Welcome to News World! It's my MEAN stack project, aiming to
+              "Welcome to News World! It's my MERN stack project, aiming to
               reveal the truth. Every user is a reporter; log in to report news,
               edit, and delete. Read news without logging in. Express opinions
               with likes, dislikes, comments, and report news for blocking. Two

@@ -65,7 +65,11 @@ function AddNewsComment({ newsFechDetails }) {
 
   return (
     <>
-      <ForumIcon onClick={handleShow} style={{ color: "grey" }} />
+      <ForumIcon
+        className="text-dark"
+        onClick={handleShow}
+        style={{ color: "grey" }}
+      />
 
       <Modal
         show={show}

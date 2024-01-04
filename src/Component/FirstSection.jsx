@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import TitleImg from "../asset/titleNew.png";
 
 function FirstSection() {
@@ -22,7 +23,16 @@ function FirstSection() {
             </div>
             <div style={{ position: "absolute", top: "80vh", left: "120px" }}>
               <button className="btn" style={{ background: "#FFC72C" }}>
-                GO TO LOGIN PAGE
+                <Link
+                  to={"/NewsReport"}
+                  style={{
+                    textDecoration: "none",
+                    color: "white",
+                    fontSize: "20px",
+                  }}
+                >
+                  News Reports
+                </Link>
               </button>
             </div>
           </div>

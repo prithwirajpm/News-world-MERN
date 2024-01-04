@@ -240,7 +240,7 @@ export default function NewsCard({ data }) {
         <CardActions disableSpacing>
           <IconButton aria-label="add to favorites">
             <span style={{ fontSize: "10px" }}>{likes}</span>
-            <FavoriteIcon onClick={() => handleLike(data._id)} />
+            <FavoriteIcon  className="text-danger" onClick={() => handleLike(data._id)} />
           </IconButton>
           <IconButton aria-label="add to unfavorite">
             <span style={{ fontSize: "10px" }}>{dislikes}</span>
@@ -268,11 +268,23 @@ export default function NewsCard({ data }) {
           </IconButton>
         </CardActions>
       ) : (
-        <CardActions>Nothing</CardActions>
+        <CardActions>
+          <FavoriteIcon
+            className="text-danger"
+            onClick={() =>
+              alert("Please loging other wise you canot explore the website")
+            }
+          />
+          <HeartBrokenIcon
+            onClick={() =>
+              alert("Please loging other wise you canot explore the website")
+            }
+          />
+        </CardActions>
       )}
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
-          <Typography paragraph>Method:</Typography>
+          <Typography paragraph>Comment:</Typography>
           <Typography paragraph>
             {usersComment?.length > 0 &&
             usersComment.some((item) => item.newsId === data._id)
@@ -284,10 +296,7 @@ export default function NewsCard({ data }) {
                       controlId="exampleForm.ControlInput1"
                       key={item.commentText}
                     >
-                      <div className="d-flex justify-content-between">
-                        <Form.Label style={{ fontSize: "10px" }}>
-                          Heading
-                        </Form.Label>
+                      <div className="d-flex justify-content-end">
                         {loggedUserId && loggedUserId == item.userId ? (
                           <Form.Label
                             style={{ fontSize: "10px", color: "grey" }}
